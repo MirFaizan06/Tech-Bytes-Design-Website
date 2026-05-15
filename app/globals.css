@@ -1,44 +1,39 @@
 @import "tailwindcss";
 
-/* Enable class-based dark mode: .dark on <html> activates dark: utilities */
 @variant dark (&:where(.dark, .dark *));
 
 /* ─── Design Tokens ─────────────────────────────────────────────────────────── */
 @layer base {
   :root {
-    /* Light theme */
-    --bg:            #f6f5ff;
-    --bg-subtle:     #eeeeff;
+    --bg:            #f7f6ff;
+    --bg-subtle:     #eeecfb;
     --surface:       #ffffff;
-    --surface-hover: #f0eeff;
-    --border:        rgba(124, 58, 237, 0.12);
-    --border-strong: rgba(124, 58, 237, 0.22);
-    --text-1:        #1a1040;
-    --text-2:        #4b3f8c;
-    --text-3:        #8b82cc;
-    --text-4:        #b5aee0;
+    --surface-hover: #f4f2ff;
+    --border:        rgba(109, 40, 217, 0.10);
+    --border-strong: rgba(109, 40, 217, 0.22);
+    --text-1:        #16103a;
+    --text-2:        #3d3580;
+    --text-3:        #7b72b8;
+    --text-4:        #ada7d6;
     --brand:         #7c3aed;
-    --brand-light:   #8b5cf6;
-    --shadow-card:   0 1px 3px rgba(100, 80, 200, 0.08), 0 4px 16px rgba(100, 80, 200, 0.06);
-    --shadow-brand:  0 0 60px rgba(124, 58, 237, 0.18);
+    --shadow-card:   0 1px 2px rgba(80,60,180,0.04), 0 4px 20px rgba(80,60,180,0.07);
+    --shadow-brand:  0 0 80px rgba(124,58,237,0.14);
   }
 
   .dark {
-    /* Dark theme */
-    --bg:            #060611;
-    --bg-subtle:     #0d0d1f;
-    --surface:       rgba(255, 255, 255, 0.04);
-    --surface-hover: rgba(255, 255, 255, 0.08);
-    --border:        rgba(255, 255, 255, 0.08);
-    --border-strong: rgba(255, 255, 255, 0.15);
-    --text-1:        #f1f0f9;
-    --text-2:        rgba(241, 240, 249, 0.65);
-    --text-3:        rgba(241, 240, 249, 0.45);
-    --text-4:        rgba(241, 240, 249, 0.28);
+    --bg:            #07071a;
+    --bg-subtle:     #0f0f27;
+    --surface:       rgba(255,255,255,0.045);
+    --surface-hover: rgba(255,255,255,0.08);
+    --border:        rgba(255,255,255,0.07);
+    --border-strong: rgba(255,255,255,0.14);
+    --text-1:        #eeeeff;
+    --text-2:        rgba(238,238,255,0.62);
+    --text-3:        rgba(238,238,255,0.40);
+    --text-4:        rgba(238,238,255,0.24);
     --brand:         #7c3aed;
-    --brand-light:   #8b5cf6;
     --shadow-card:   none;
-    --shadow-brand:  0 0 60px rgba(124, 58, 237, 0.25);
+    --shadow-brand:  0 0 80px rgba(124,58,237,0.22);
   }
 
   html { scroll-behavior: smooth; }
@@ -48,65 +43,53 @@
     color: var(--text-1);
     font-family: var(--font-inter), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
-    transition: background-color 0.25s ease, color 0.25s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
-  ::selection {
-    background-color: rgba(124, 58, 237, 0.25);
-    color: var(--text-1);
-  }
+  ::selection { background: rgba(124,58,237,0.18); color: var(--text-1); }
 
-  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb {
-    background: rgba(124, 58, 237, 0.35);
-    border-radius: 9999px;
-  }
+  ::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.3); border-radius: 99px; }
 }
 
-/* ─── Semantic Utilities ─────────────────────────────────────────────────────── */
+/* ─── Utilities ──────────────────────────────────────────────────────────────── */
 @layer utilities {
-  /* Glass card — adapts to theme automatically */
   .glass {
     background: var(--surface);
     border: 1px solid var(--border);
     box-shadow: var(--shadow-card);
-    backdrop-filter: blur(12px);
   }
   .glass-strong {
     background: var(--surface-hover);
     border: 1px solid var(--border-strong);
-    backdrop-filter: blur(20px);
   }
 
-  /* Semantic text helpers */
   .text-primary   { color: var(--text-1); }
   .text-secondary { color: var(--text-2); }
   .text-muted     { color: var(--text-3); }
   .text-faint     { color: var(--text-4); }
 
-  /* Semantic surface helpers */
   .bg-surface       { background: var(--surface); }
   .bg-surface-hover { background: var(--surface-hover); }
   .bg-page          { background: var(--bg); }
   .bg-page-subtle   { background: var(--bg-subtle); }
-  .border-theme     { border-color: var(--border); }
+  .border-theme       { border-color: var(--border); }
   .border-theme-strong { border-color: var(--border-strong); }
 
-  /* Brand gradient text */
+  /* Reserved for the hero title only — don't use elsewhere */
   .gradient-text {
-    background: linear-gradient(135deg, #a78bfa, #60a5fa);
+    background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Brand glow shadow */
   .brand-glow { box-shadow: var(--shadow-brand); }
+  .section-padding { padding-top: 5rem; padding-bottom: 5rem; }
 
-  /* Section padding */
-  .section-padding {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+  /* Diagonal section divider */
+  .section-slash {
+    clip-path: polygon(0 0, 100% 3%, 100% 100%, 0 97%);
   }
 }

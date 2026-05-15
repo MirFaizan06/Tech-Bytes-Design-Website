@@ -4,28 +4,28 @@ import { RequestForm } from './RequestForm';
 
 export const metadata: Metadata = {
   title: 'Services & Pricing',
-  description:
-    'Explore our web development packages and request a custom project. Transparent pricing, no hidden fees.',
+  description: 'Explore our web development packages and request a custom project. Transparent pricing, no hidden fees.',
 };
 
 export default function RequestDevelopmentPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20">
       <div className="text-center mb-16">
-        <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+        <p className="text-xs font-semibold text-violet-600 dark:text-violet-400 uppercase tracking-widest mb-3">Pricing</p>
+        <h1 className="text-4xl sm:text-5xl font-bold text-primary mb-4">
           Services & <span className="gradient-text">Pricing</span>
         </h1>
-        <p className="text-white/50 max-w-2xl mx-auto text-lg">
+        <p className="text-muted max-w-2xl mx-auto text-lg">
           Straightforward pricing for every stage of your digital journey. All plans include source code delivery, mobile responsiveness, and post-launch support.
         </p>
       </div>
 
       <PricingSection />
 
-      <div className="mt-20">
+      <div className="mt-24">
         <div className="text-center mb-10">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">Request a Project</h2>
-          <p className="text-white/50 max-w-xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold text-primary mb-3">Request a Project</h2>
+          <p className="text-muted max-w-xl mx-auto">
             Tell us about your idea. We'll get back to you with a tailored proposal within 24 hours.
           </p>
         </div>
