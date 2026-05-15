@@ -57,7 +57,7 @@ export function FeaturedProjects() {
           whileHover={{ y: -4 }}
           className="group glass rounded-2xl overflow-hidden"
         >
-          <div className="relative h-48 bg-gradient-to-br from-violet-900/30 to-blue-900/30 overflow-hidden">
+          <div className="relative h-48 bg-gradient-to-br from-violet-100 to-blue-100 dark:from-violet-900/30 dark:to-blue-900/30 overflow-hidden">
             {project.images?.[0] ? (
               <Image
                 src={project.images[0]}
@@ -66,32 +66,32 @@ export function FeaturedProjects() {
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-white/20 text-4xl font-bold">
+              <div className="w-full h-full flex items-center justify-center text-4xl font-bold text-violet-300 dark:text-white/10">
                 {project.title[0]}
               </div>
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
           </div>
 
           <div className="p-6">
             <div className="flex flex-wrap gap-1.5 mb-3">
               {project.tags?.slice(0, 3).map((tag) => (
-                <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-violet-500/15 text-violet-300 border border-violet-500/20">
+                <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300 border border-violet-200 dark:border-violet-500/20">
                   {tag}
                 </span>
               ))}
             </div>
-            <h3 className="font-semibold text-white mb-2 line-clamp-1">{project.title}</h3>
-            <p className="text-sm text-white/50 line-clamp-2 mb-4">{project.description}</p>
+            <h3 className="font-semibold text-primary mb-2 line-clamp-1">{project.title}</h3>
+            <p className="text-sm text-muted line-clamp-2 mb-4">{project.description}</p>
             <div className="flex items-center gap-3">
               <Link
                 href={`/projects/${project.slug}`}
-                className="flex items-center gap-1.5 text-sm text-violet-400 hover:text-violet-300 transition-colors font-medium"
+                className="flex items-center gap-1.5 text-sm text-violet-600 dark:text-violet-400 hover:text-violet-500 dark:hover:text-violet-300 transition-colors font-medium"
               >
                 View project <FiArrowRight className="w-4 h-4" />
               </Link>
               {project.liveUrl && (
-                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white/60 transition-colors">
+                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-secondary transition-colors">
                   <FiExternalLink className="w-4 h-4" />
                 </a>
               )}

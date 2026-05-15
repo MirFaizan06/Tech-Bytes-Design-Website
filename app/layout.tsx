@@ -4,6 +4,7 @@ import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { ToastProvider } from '@/contexts/ToastContext';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -59,21 +60,37 @@ const jsonLd = {
   sameAs: [],
 };
 
+/* Inline script that runs before paint to set .dark class — prevents flash */
+const themeScript = `
+(function(){
+  try {
+    var t = localStorage.getItem('tbd-theme');
+    if (t === 'dark') { document.documentElement.classList.add('dark'); }
+    else { document.documentElement.classList.remove('dark'); }
+  } catch(e) {}
+})();
+`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
       <head>
+        {/* No-flash theme script — must be first in <head> */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} suppressHydrationWarning />
         <script
           type="application/ld+json"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col">
-        <ToastProvider>
-          <Navbar />
-          <main className="flex-1 pt-16">{children}</main>
-          <Footer />
-        </ToastProvider>
+      <body className="min-h-screen flex flex-col" suppressHydrationWarning>
+        <ThemeProvider>
+          <ToastProvider>
+            <Navbar />
+            <main className="flex-1 pt-16">{children}</main>
+            <Footer />
+          </ToastProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

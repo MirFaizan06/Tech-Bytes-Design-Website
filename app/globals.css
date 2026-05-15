@@ -1,41 +1,99 @@
 @import "tailwindcss";
 
+/* Enable class-based dark mode: .dark on <html> activates dark: utilities */
+@variant dark (&:where(.dark, .dark *));
+
+/* ─── Design Tokens ─────────────────────────────────────────────────────────── */
 @layer base {
   :root {
-    --brand: #7c3aed;
-    --brand-light: #8b5cf6;
-    --brand-dark: #6d28d9;
+    /* Light theme */
+    --bg:            #f6f5ff;
+    --bg-subtle:     #eeeeff;
+    --surface:       #ffffff;
+    --surface-hover: #f0eeff;
+    --border:        rgba(124, 58, 237, 0.12);
+    --border-strong: rgba(124, 58, 237, 0.22);
+    --text-1:        #1a1040;
+    --text-2:        #4b3f8c;
+    --text-3:        #8b82cc;
+    --text-4:        #b5aee0;
+    --brand:         #7c3aed;
+    --brand-light:   #8b5cf6;
+    --shadow-card:   0 1px 3px rgba(100, 80, 200, 0.08), 0 4px 16px rgba(100, 80, 200, 0.06);
+    --shadow-brand:  0 0 60px rgba(124, 58, 237, 0.18);
   }
 
-  html {
-    scroll-behavior: smooth;
+  .dark {
+    /* Dark theme */
+    --bg:            #060611;
+    --bg-subtle:     #0d0d1f;
+    --surface:       rgba(255, 255, 255, 0.04);
+    --surface-hover: rgba(255, 255, 255, 0.08);
+    --border:        rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.15);
+    --text-1:        #f1f0f9;
+    --text-2:        rgba(241, 240, 249, 0.65);
+    --text-3:        rgba(241, 240, 249, 0.45);
+    --text-4:        rgba(241, 240, 249, 0.28);
+    --brand:         #7c3aed;
+    --brand-light:   #8b5cf6;
+    --shadow-card:   none;
+    --shadow-brand:  0 0 60px rgba(124, 58, 237, 0.25);
   }
+
+  html { scroll-behavior: smooth; }
 
   body {
-    background-color: #060611;
-    color: #f1f0f9;
+    background-color: var(--bg);
+    color: var(--text-1);
     font-family: var(--font-inter), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 
   ::selection {
-    background-color: rgba(124, 58, 237, 0.4);
-    color: #fff;
+    background-color: rgba(124, 58, 237, 0.25);
+    color: var(--text-1);
   }
 
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #0d0d1a;
-  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb {
-    background: #3b1f73;
+    background: rgba(124, 58, 237, 0.35);
     border-radius: 9999px;
   }
 }
 
+/* ─── Semantic Utilities ─────────────────────────────────────────────────────── */
 @layer utilities {
+  /* Glass card — adapts to theme automatically */
+  .glass {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(12px);
+  }
+  .glass-strong {
+    background: var(--surface-hover);
+    border: 1px solid var(--border-strong);
+    backdrop-filter: blur(20px);
+  }
+
+  /* Semantic text helpers */
+  .text-primary   { color: var(--text-1); }
+  .text-secondary { color: var(--text-2); }
+  .text-muted     { color: var(--text-3); }
+  .text-faint     { color: var(--text-4); }
+
+  /* Semantic surface helpers */
+  .bg-surface       { background: var(--surface); }
+  .bg-surface-hover { background: var(--surface-hover); }
+  .bg-page          { background: var(--bg); }
+  .bg-page-subtle   { background: var(--bg-subtle); }
+  .border-theme     { border-color: var(--border); }
+  .border-theme-strong { border-color: var(--border-strong); }
+
+  /* Brand gradient text */
   .gradient-text {
     background: linear-gradient(135deg, #a78bfa, #60a5fa);
     -webkit-background-clip: text;
@@ -43,22 +101,10 @@
     background-clip: text;
   }
 
-  .glass {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(12px);
-  }
+  /* Brand glow shadow */
+  .brand-glow { box-shadow: var(--shadow-brand); }
 
-  .glass-strong {
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(20px);
-  }
-
-  .brand-glow {
-    box-shadow: 0 0 60px rgba(124, 58, 237, 0.25);
-  }
-
+  /* Section padding */
   .section-padding {
     padding-top: 5rem;
     padding-bottom: 5rem;

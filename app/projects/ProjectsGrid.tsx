@@ -7,15 +7,12 @@ import { Project } from '@/types';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { FiExternalLink, FiGithub } from 'react-icons/fi';
+import { FiExternalLink, FiGithub, FiBriefcase } from 'react-icons/fi';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { CardSkeleton } from '@/components/ui/PageSkeleton';
-import { FiBriefcase } from 'react-icons/fi';
 
 export function ProjectsGrid() {
-  const { data: projects, loading } = useFirestoreCollection<Project>('projects', [
-    orderBy('createdAt', 'desc'),
-  ]);
+  const { data: projects, loading } = useFirestoreCollection<Project>('projects', [orderBy('createdAt', 'desc')]);
   const [activeTag, setActiveTag] = useState<string>('All');
 
   const allTags = ['All', ...Array.from(new Set(projects.flatMap((p) => p.tags ?? [])))];
@@ -30,18 +27,11 @@ export function ProjectsGrid() {
   }
 
   if (projects.length === 0) {
-    return (
-      <EmptyState
-        title="No projects yet"
-        description="We're working on something amazing. Check back soon!"
-        icon={<FiBriefcase className="w-8 h-8" />}
-      />
-    );
+    return <EmptyState title="No projects yet" description="We're working on something amazing. Check back soon!" icon={<FiBriefcase className="w-8 h-8" />} />;
   }
 
   return (
     <>
-      {/* Tag filter */}
       <div className="flex flex-wrap gap-2 mb-8">
         {allTags.map((tag) => (
           <button
@@ -49,8 +39,8 @@ export function ProjectsGrid() {
             onClick={() => setActiveTag(tag)}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
               activeTag === tag
-                ? 'bg-violet-600 text-white'
-                : 'glass text-white/50 hover:text-white hover:bg-white/10'
+                ? 'bg-violet-600 text-white shadow-sm shadow-violet-500/25'
+                : 'glass text-muted hover:text-primary hover:border-theme-strong'
             }`}
           >
             {tag}
@@ -69,43 +59,38 @@ export function ProjectsGrid() {
             className="group glass rounded-2xl overflow-hidden"
           >
             <Link href={`/projects/${project.slug}`} className="block">
-              <div className="relative h-48 bg-gradient-to-br from-violet-900/30 to-blue-900/20 overflow-hidden">
+              <div className="relative h-48 bg-gradient-to-br from-violet-100 to-blue-100 dark:from-violet-900/30 dark:to-blue-900/20 overflow-hidden">
                 {project.images?.[0] ? (
-                  <Image
-                    src={project.images[0]}
-                    alt={project.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
+                  <Image src={project.images[0]} alt={project.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-5xl font-black text-white/10">
+                  <div className="w-full h-full flex items-center justify-center text-5xl font-black text-violet-200 dark:text-white/10">
                     {project.title[0]}
                   </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               </div>
             </Link>
 
             <div className="p-6">
               <div className="flex flex-wrap gap-1.5 mb-3">
                 {project.tags?.slice(0, 3).map((tag) => (
-                  <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-violet-500/15 text-violet-300 border border-violet-500/20">
+                  <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300 border border-violet-200 dark:border-violet-500/20">
                     {tag}
                   </span>
                 ))}
               </div>
               <Link href={`/projects/${project.slug}`}>
-                <h3 className="font-semibold text-white hover:text-violet-300 transition-colors mb-2">{project.title}</h3>
+                <h3 className="font-semibold text-primary hover:text-violet-600 dark:hover:text-violet-400 transition-colors mb-2">{project.title}</h3>
               </Link>
-              <p className="text-sm text-white/50 line-clamp-2 mb-4">{project.description}</p>
+              <p className="text-sm text-muted line-clamp-2 mb-4">{project.description}</p>
               <div className="flex gap-3">
                 {project.liveUrl && (
-                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-xs text-white/40 hover:text-white transition-colors">
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-xs text-muted hover:text-primary transition-colors">
                     <FiExternalLink className="w-3.5 h-3.5" /> Live
                   </a>
                 )}
                 {project.githubUrl && (
-                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-xs text-white/40 hover:text-white transition-colors">
+                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-xs text-muted hover:text-primary transition-colors">
                     <FiGithub className="w-3.5 h-3.5" /> GitHub
                   </a>
                 )}

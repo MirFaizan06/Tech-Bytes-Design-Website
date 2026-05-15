@@ -9,9 +9,7 @@ import { CardSkeleton } from '@/components/ui/PageSkeleton';
 import { EmptyState } from '@/components/ui/EmptyState';
 
 export function PricingSection() {
-  const { data: plans, loading } = useFirestoreCollection<PricingPlan>('pricing', [
-    orderBy('order', 'asc'),
-  ]);
+  const { data: plans, loading } = useFirestoreCollection<PricingPlan>('pricing', [orderBy('order', 'asc')]);
 
   if (loading) {
     return (
@@ -22,12 +20,7 @@ export function PricingSection() {
   }
 
   if (plans.length === 0) {
-    return (
-      <EmptyState
-        title="Pricing plans coming soon"
-        description="We're putting together our service packages. Contact us for a custom quote."
-      />
-    );
+    return <EmptyState title="Pricing plans coming soon" description="We're putting together our service packages. Contact us for a custom quote." />;
   }
 
   return (
@@ -38,17 +31,17 @@ export function PricingSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: i * 0.1 }}
-          className="glass rounded-2xl p-7 flex flex-col hover:border-violet-500/30 transition-colors"
+          className="glass rounded-2xl p-7 flex flex-col hover:border-theme-strong transition-colors"
         >
-          <h3 className="text-lg font-bold text-white mb-1">{plan.serviceName}</h3>
-          <p className="text-sm text-white/50 mb-5">{plan.description}</p>
+          <h3 className="text-lg font-bold text-primary mb-1">{plan.serviceName}</h3>
+          <p className="text-sm text-muted mb-5">{plan.description}</p>
 
           <div className="mb-6">
-            <span className="text-3xl font-black text-white">
+            <span className="text-3xl font-black text-primary">
               ₹{plan.startingPrice.toLocaleString('en-IN')}
             </span>
             {plan.upToPrice > plan.startingPrice && (
-              <span className="text-white/40 text-sm ml-2">
+              <span className="text-muted text-sm ml-2">
                 – ₹{plan.upToPrice.toLocaleString('en-IN')}
               </span>
             )}
@@ -56,8 +49,8 @@ export function PricingSection() {
 
           <ul className="space-y-2.5 mb-8 flex-1">
             {plan.benefits.map((b) => (
-              <li key={b} className="flex items-start gap-2.5 text-sm text-white/60">
-                <FiCheck className="w-4 h-4 text-violet-400 mt-0.5 shrink-0" />
+              <li key={b} className="flex items-start gap-2.5 text-sm text-muted">
+                <FiCheck className="w-4 h-4 text-violet-500 mt-0.5 shrink-0" />
                 {b}
               </li>
             ))}
@@ -65,7 +58,7 @@ export function PricingSection() {
 
           <a
             href="#request-form"
-            className="block text-center py-2.5 px-4 rounded-xl bg-violet-600/20 hover:bg-violet-600 border border-violet-500/30 text-violet-300 hover:text-white text-sm font-medium transition-all duration-200"
+            className="block text-center py-2.5 px-4 rounded-xl bg-violet-100 dark:bg-violet-600/20 hover:bg-violet-600 border border-violet-200 dark:border-violet-500/30 text-violet-700 dark:text-violet-300 hover:text-white hover:border-transparent text-sm font-medium transition-all duration-200"
           >
             Get Started
           </a>
