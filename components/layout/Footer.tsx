@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { FiMail, FiPhone, FiMapPin, FiGithub, FiLinkedin, FiTwitter } from 'react-icons/fi';
+import { FiMail, FiPhone, FiMapPin, FiGithub, FiLinkedin } from 'react-icons/fi';
 
 const quickLinks = [
   { href: '/', label: 'Home' },
@@ -34,7 +34,6 @@ export function Footer() {
               {[
                 { Icon: FiGithub, href: '#', label: 'GitHub' },
                 { Icon: FiLinkedin, href: '#', label: 'LinkedIn' },
-                { Icon: FiTwitter, href: '#', label: 'Twitter' },
               ].map(({ Icon, href, label }) => (
                 <a
                   key={label}
