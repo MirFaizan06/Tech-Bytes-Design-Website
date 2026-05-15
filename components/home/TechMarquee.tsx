@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useMounted } from '@/hooks/useMounted';
 
 const techs = [
   { name: 'Next.js',    symbol: '▲' },
@@ -39,14 +40,22 @@ function Track({ reverse = false }: { reverse?: boolean }) {
 }
 
 export function TechMarquee() {
+  const mounted = useMounted();
+
   return (
     <div className="relative overflow-hidden py-2 space-y-3">
-      {/* Fade masks */}
       <div className="pointer-events-none absolute inset-y-0 left-0 w-20 z-10 bg-gradient-to-r from-[var(--bg)] to-transparent" />
       <div className="pointer-events-none absolute inset-y-0 right-0 w-20 z-10 bg-gradient-to-l from-[var(--bg)] to-transparent" />
 
-      <Track />
-      <Track reverse />
+      {/* Only animate after mount — motion.div with animated x differs SSR vs client */}
+      {mounted ? (
+        <>
+          <Track />
+          <Track reverse />
+        </>
+      ) : (
+        <div className="flex gap-4 overflow-hidden opacity-0 h-10" />
+      )}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useMounted } from '@/hooks/useMounted';
 
 const codeLines = [
   { indent: 0, tokens: [{ t: 'const ', c: 'keyword' }, { t: 'website', c: 'var' }, { t: ' = ', c: 'op' }, { t: 'build', c: 'fn' }, { t: '({', c: 'punct' }] },
@@ -21,6 +22,14 @@ const colorMap: Record<string, string> = {
 };
 
 export function HeroVisual() {
+  const mounted = useMounted();
+
+  // Render a stable invisible placeholder on the server so React hydration
+  // sees identical HTML — Framer Motion's initial styles differ SSR vs client.
+  if (!mounted) {
+    return <div className="hidden lg:block relative opacity-0 pointer-events-none" />;
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 40, y: 10 }}

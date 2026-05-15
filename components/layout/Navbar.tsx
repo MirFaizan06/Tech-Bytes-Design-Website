@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX, FiSun, FiMoon } from 'react-icons/fi';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useMounted } from '@/hooks/useMounted';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -19,6 +20,7 @@ const navLinks = [
 export function Navbar() {
   const pathname = usePathname();
   const { theme, toggle } = useTheme();
+  const mounted = useMounted();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -70,37 +72,42 @@ export function Navbar() {
 
         {/* Right side actions */}
         <div className="flex items-center gap-2">
-          {/* Theme toggle */}
+          {/* Theme toggle — rendered client-only to avoid hydration mismatch */}
           <button
             onClick={toggle}
-            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            aria-label="Toggle colour theme"
             className="w-9 h-9 rounded-lg glass border-theme flex items-center justify-center text-secondary hover:text-primary hover:border-theme-strong transition-all duration-200"
           >
-            <AnimatePresence mode="wait" initial={false}>
-              {theme === 'dark' ? (
-                <motion.span
-                  key="sun"
-                  initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
-                  animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                  exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
-                  transition={{ duration: 0.2 }}
-                  className="flex items-center justify-center"
-                >
-                  <FiSun className="w-4 h-4" />
-                </motion.span>
-              ) : (
-                <motion.span
-                  key="moon"
-                  initial={{ rotate: 90, opacity: 0, scale: 0.5 }}
-                  animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                  exit={{ rotate: -90, opacity: 0, scale: 0.5 }}
-                  transition={{ duration: 0.2 }}
-                  className="flex items-center justify-center"
-                >
-                  <FiMoon className="w-4 h-4" />
-                </motion.span>
-              )}
-            </AnimatePresence>
+            {/* Before mount: render a stable placeholder that matches server output */}
+            {!mounted ? (
+              <span className="w-4 h-4" />
+            ) : (
+              <AnimatePresence mode="wait" initial={false}>
+                {theme === 'dark' ? (
+                  <motion.span
+                    key="sun"
+                    initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
+                    animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                    exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex items-center justify-center"
+                  >
+                    <FiSun className="w-4 h-4" />
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="moon"
+                    initial={{ rotate: 90, opacity: 0, scale: 0.5 }}
+                    animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                    exit={{ rotate: -90, opacity: 0, scale: 0.5 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex items-center justify-center"
+                  >
+                    <FiMoon className="w-4 h-4" />
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            )}
           </button>
 
           {/* CTA */}
